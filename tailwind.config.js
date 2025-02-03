@@ -7,7 +7,8 @@ export default {
   theme: {
     extend: {
       colors:{
-        active:"#0aad0a"
+        active:"#0aad0a",
+        main:"#1bc61f"
       }
     },
   },

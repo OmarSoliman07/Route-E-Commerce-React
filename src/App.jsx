@@ -10,25 +10,37 @@ import Signup from './Compontents/Signup/Signup'
 import Login from './Compontents/Login/Login'
 import Notfound from './Compontents/Notfound/Notfound'
 import Layout from './Compontents/Layout/Layout'
+import UpdatePassword from './Compontents/UpdatePassword/UpdatePassword'
+import ForgotPassword from './Compontents/ForgotPassword/ForgotPassword'
+import AuthContextProvider from './Context/AuthContextProvider' 
+import ProductDetails from './Compontents/ProductDetails/ProductDetails'
 
 function App() {
-  const [count, setCount] = useState(0)
-  let router= createBrowserRouter([
-    {path: '',element:<Layout/>,children:[
-      {index:true,element:<Home/>},
-      {path:"product",element:<Product/>},
-      {path:"cart",element:<Cart/>},
-      {path:"login",element:<Login/>},
-      {path:"signup",element:<Signup/>},
-      {path:"**",element:<Notfound/>},
-    ]}
-  ])
-  return (
-    <>
-    <RouterProvider router={router}></RouterProvider>
-
-    </>
-  )
+  const [] = useState(0)
+  let router = createBrowserRouter([
+        {
+            path: "",
+            element: <Layout />,
+            children: [
+        { index: true, element: <Home />  },
+        { path: "product", element: <Product /> },
+        { path: "ProductDetails/:x/:y", element: <ProductDetails /> },
+        { path: "cart", element: <Cart /> },
+        // { path: "category", element: <Category /> },
+        // { path: "brands", element: <Brands /> },
+        { path: "login", element: <Login />},
+        { path: "forgotPassword", element: <ForgotPassword />},
+        { path: "updatePassword", element: <UpdatePassword />},
+        { path: "Signup", element: <Signup />},
+        { path: "", element: <Notfound />},
+      ],
+        },
+    ]);
+    return (
+      <AuthContextProvider> {/* Wrap with AuthContextProvider */}
+        <RouterProvider router={router} />
+      </AuthContextProvider>
+  );
 }
 
 export default App
