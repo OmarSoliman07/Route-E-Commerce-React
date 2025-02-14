@@ -14,6 +14,8 @@ import UpdatePassword from './Compontents/UpdatePassword/UpdatePassword'
 import ForgotPassword from './Compontents/ForgotPassword/ForgotPassword'
 import AuthContextProvider from './Context/AuthContextProvider' 
 import ProductDetails from './Compontents/ProductDetails/ProductDetails'
+import ProtectedRouting from './Context/ProtectedRouting'
+import CategoryProducts from './Compontents/CategoryProducts/CategoryProducts'
 
 function App() {
   const [] = useState(0)
@@ -22,12 +24,13 @@ function App() {
             path: "",
             element: <Layout />,
             children: [
-        { index: true, element: <Home />  },
-        { path: "product", element: <Product /> },
-        { path: "ProductDetails/:x/:y", element: <ProductDetails /> },
-        { path: "cart", element: <Cart /> },
-        // { path: "category", element: <Category /> },
-        // { path: "brands", element: <Brands /> },
+        { index: true, element:<ProtectedRouting>  <Home />  </ProtectedRouting>   },
+        { path: "product", element: <ProtectedRouting> <Product /> </ProtectedRouting> },
+        { path: "ProductDetails/:x/:y", element: <ProtectedRouting> <ProductDetails /> </ProtectedRouting> },
+        // { path: "category/:id", element: <ProtectedRouting> <CategoryProducts /> </ProtectedRouting> },
+        { path: "cart", element: <ProtectedRouting> <Cart /> </ProtectedRouting> },
+        // { path: "category", element: <ProtectedRouting> <Category /> </ProtectedRouting> },
+        // { path: "brands", element: <ProtectedRouting> <Brands /> </ProtectedRouting> },
         { path: "login", element: <Login />},
         { path: "forgotPassword", element: <ForgotPassword />},
         { path: "updatePassword", element: <UpdatePassword />},
@@ -37,7 +40,7 @@ function App() {
         },
     ]);
     return (
-      <AuthContextProvider> {/* Wrap with AuthContextProvider */}
+      <AuthContextProvider>
         <RouterProvider router={router} />
       </AuthContextProvider>
   );
