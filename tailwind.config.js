@@ -4,14 +4,15 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}", 
   ],
+  darkMode: 'class', // or 'media' or 'class'
   theme: {
     extend: {
       colors:{
         active:"#0aad0a",
-        main:"#1bc61f"
+        main:"#1bc61f",
+        "dark-bg": "#1a202c",
       }
     },
   },
   plugins: [],
 }
-

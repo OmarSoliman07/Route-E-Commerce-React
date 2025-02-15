@@ -73,34 +73,40 @@ export default function Home() {
 
       {/* Pagination */}
       <nav className="flex justify-center mt-7" aria-label="Page navigation example">
-        <ul className="inline-flex -space-x-px text-base h-10">
-          <li>
+        <ul className="inline-flex -space-x-px text-base h-10 ">
+          <li className="">
             <button
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-              className="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700"
+              className="dark:bg-gray-900 dark:text-white dark:hover:bg-slate-700 flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700"
               disabled={currentPage === 1}
             >
               Previous
             </button>
           </li>
 
-          {numsPages.map((el) => (
-            <li key={el}>
-              <button
-                onClick={() => setCurrentPage(el)}
-                className={`flex items-center justify-center px-4 h-10 leading-tight ${
-                  currentPage === el ? "bg-main text-white" : "text-gray-500 bg-white"
-                } border border-gray-300 hover:bg-gray-100 hover:text-gray-700`}
-              >
-                {el}
-              </button>
-            </li>
-          ))}
+         {numsPages.map((el) => (
+  <li key={el}>
+    <button
+      onClick={() => setCurrentPage(el)}
+      className={`
+        flex items-center justify-center px-4 h-10 leading-tight border border-gray-300 
+        ${
+          currentPage === el
+            ? "bg-main text-white hover:bg-main hover:text-white dark:bg-main dark:text-white dark:hover:bg-main"
+            : "text-gray-500 bg-white hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-900 dark:text-white dark:hover:bg-slate-700 dark:hover:text-gray-300"
+        }
+      `}
+    >
+      {el}
+    </button>
+  </li>
+))}
+
 
           <li>
             <button
               onClick={() => setCurrentPage((prev) => Math.min(prev + 1, numsPages.length))}
-              className="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700"
+              className="dark:bg-gray-900 dark:text-white dark:hover:bg-slate-700 flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700"
               disabled={currentPage === numsPages.length}
             >
               Next

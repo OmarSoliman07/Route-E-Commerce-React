@@ -21,7 +21,11 @@ export default function ProductDetails() {
   }, [x]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <span className="loader"></span>
+      </div>
+    );
   }
 
   if (!product) {
@@ -47,11 +51,11 @@ export default function ProductDetails() {
           ))}
         </div>
     
-        <h1>{product.title}</h1>
+       
       </div>
       <div className='w-8/12 flex flex-col justify-center '>
         <h1 className='my-3'>{product.title}</h1>
-        <p className='text-gray-600'>{product.description}</p>
+        <p className='text-gray-600 dark:text-gray-400'>{product.description}</p>
            <div className='flex justify-between my-5'>
               <h2>{product?.price} egp</h2>
                 <span>

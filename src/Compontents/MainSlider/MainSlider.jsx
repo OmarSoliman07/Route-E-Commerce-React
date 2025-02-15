@@ -7,6 +7,7 @@ import slideimg2 from "../../assets/images/slider-image-2.jpeg";
 import slideimg3 from "../../assets/images/slider-image-3.jpeg";
 import slideimg6 from "../../assets/images/Slider-img-4.jpg";
 import slideimg7 from "../../assets/images/Slider-img-5.jpg";
+import "./MainSlider.css";
 
 export default function MainSlider() {
   var settings = {
@@ -16,20 +17,21 @@ export default function MainSlider() {
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: false,
-    dots: true, // الـ dots مفعّلة في الوضع العادي
+    dots: true,
     responsive: [
       {
-        breakpoint: 640, // أقل من 640px (شاشات small)
+        breakpoint: 640, 
         settings: {
-          dots: false, // إخفاء النقاط في الشاشات الصغيرة
+          dots: false, 
         },
       },
+      
     ],
   };
 
   return (
     <div className="flex flex-col sm:flex-row">
-      {/* Slider Section */}
+ 
       <div className="w-full sm:w-9/12">
         <Slider {...settings}>
           <div>
@@ -44,7 +46,7 @@ export default function MainSlider() {
         </Slider>
       </div>
 
-      {/* Side Images Section */}
+    
       <div className="w-full sm:w-3/12 mt-4 sm:mt-0">
         <div>
           <img
