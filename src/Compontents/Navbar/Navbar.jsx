@@ -37,19 +37,22 @@ export default function Navbar() {
           </svg>
         </button>
 
-        <div className="hidden md:flex md:items-center md:w-auto" id="navbar-default">
-          <ul className="font-medium flex flex-col md:flex-row p-4 md:p-0 mt-4 md:mt-0 border border-gray-100 rounded-lg bg-gray-50 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 md:space-x-4">
-            <li>
-              <NavLink to="/" className="block py-2 px-3 text-gray-900 dark:text-white">Home</NavLink>
-            </li>
-            <li>
-              <NavLink to="/Product" className="block py-2 px-3 text-gray-900 dark:text-white">Products</NavLink>
-            </li>
-            <li>
-              <NavLink to="/Cart" className="block py-2 px-3 text-gray-900 dark:text-white">Cart</NavLink>
-            </li>
-          </ul>
-        </div>
+        {/* عرض الروابط فقط إذا كان المستخدم مسجلاً الدخول */}
+        {token && (
+          <div className="hidden md:flex md:items-center md:w-auto" id="navbar-default">
+            <ul className="font-medium flex flex-col md:flex-row p-4 md:p-0 mt-4 md:mt-0 border border-gray-100 rounded-lg bg-gray-50 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 md:space-x-4">
+              <li>
+                <NavLink to="/" className="block py-2 px-3 text-gray-900 dark:text-white">Home</NavLink>
+              </li>
+              <li>
+                <NavLink to="/Product" className="block py-2 px-3 text-gray-900 dark:text-white">Products</NavLink>
+              </li>
+              <li>
+                <NavLink to="/Cart" className="block py-2 px-3 text-gray-900 dark:text-white">Cart</NavLink>
+              </li>
+            </ul>
+          </div>
+        )}
 
         <div className="hidden md:flex items-center space-x-4">
           {token ? (
@@ -69,17 +72,17 @@ export default function Navbar() {
       {isOpen && (
         <div className="md:hidden border-t border-gray-300 pt-3 mt-3">
           <ul className="font-medium flex flex-col p-4 border border-gray-100 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-            <li>
-              <NavLink to="/" className="block py-2 px-3 text-gray-900 dark:text-white">Home</NavLink>
-            </li>
-            <li>
-              <NavLink to="/Product" className="block py-2 px-3 text-gray-900 dark:text-white">Products</NavLink>
-            </li>
-            <li>
-              <NavLink to="/Cart" className="block py-2 px-3 text-gray-900 dark:text-white">Cart</NavLink>
-            </li>
             {token ? (
               <>
+                <li>
+                  <NavLink to="/" className="block py-2 px-3 text-gray-900 dark:text-white">Home</NavLink>
+                </li>
+                <li>
+                  <NavLink to="/Product" className="block py-2 px-3 text-gray-900 dark:text-white">Products</NavLink>
+                </li>
+                <li>
+                  <NavLink to="/Cart" className="block py-2 px-3 text-gray-900 dark:text-white">Cart</NavLink>
+                </li>
                 <span className="block text-green-500 font-bold text-center mt-3">Hello, {userData?.name || "User"}</span>
                 <span className="block text-center mt-2 cursor-pointer text-red-500" onClick={logout}>Log Out</span>
               </>
