@@ -71,7 +71,7 @@ export default function Signup() {
                 <div className="mb-5">
                     <label
                         htmlFor="name"
-                        className="block mb-2 text-sm font-medium text-gray-900 "
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white "
                     >
                         Your name
                     </label>
@@ -82,10 +82,10 @@ export default function Signup() {
                         type="text"
                         id="name"
                         name="name"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-dark-input-bg dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     />
                     {registerForm.touched.name && registerForm.errors.name ? (
-                        <p className="text-red-800">{registerForm.errors.name}</p>
+                        <p className="text-red-800 dark:text-red-400">{registerForm.errors.name}</p>
                     ) : (
                         ""
                     )}
@@ -93,7 +93,7 @@ export default function Signup() {
                 <div className="mb-5">
                     <label
                         htmlFor="email"
-                        className="block mb-2 text-sm font-medium text-gray-900 "
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white "
                     >
                         Your email
                     </label>
@@ -104,10 +104,10 @@ export default function Signup() {
                         type="email"
                         id="email"
                         name="email"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-dark-input-bg dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     />
                     {registerForm.touched.email && registerForm.errors.email ? (
-                        <p className="text-red-800">{registerForm.errors.email}</p>
+                        <p className="text-red-800 dark:text-red-400">{registerForm.errors.email}</p>
                     ) : (
                         ""
                     )}
@@ -115,7 +115,7 @@ export default function Signup() {
                 <div className="mb-5">
                     <label
                         htmlFor="password"
-                        className="block mb-2 text-sm font-medium text-gray-900 "
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white "
                     >
                         Your password
                     </label>
@@ -126,10 +126,10 @@ export default function Signup() {
                         type="password"
                         id="password"
                         name="password"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-dark-input-bg dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     />
                     {registerForm.touched.password && registerForm.errors.password ? (
-                        <p className="text-red-800">{registerForm.errors.password}</p>
+                        <p className="text-red-800 dark:text-red-400">{registerForm.errors.password}</p>
                     ) : (
                         ""
                     )}
@@ -137,7 +137,7 @@ export default function Signup() {
                 <div className="mb-5">
                     <label
                         htmlFor="rePassword"
-                        className="block mb-2 text-sm font-medium text-gray-900 "
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white "
                     >
                         Your rePassword
                     </label>
@@ -148,10 +148,10 @@ export default function Signup() {
                         type="password"
                         id="rePassword"
                         name="rePassword"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-dark-input-bg dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     />
                     {registerForm.touched.rePassword && registerForm.errors.rePassword ? (
-                        <p className="text-red-800">{registerForm.errors.rePassword}</p>
+                        <p className="text-red-800 dark:text-red-400">{registerForm.errors.rePassword}</p>
                     ) : (
                         ""
                     )}
@@ -159,7 +159,7 @@ export default function Signup() {
                 <div className="mb-5">
                     <label
                         htmlFor="phone"
-                        className="block mb-2 text-sm font-medium text-gray-900 "
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white "
                     >
                         Your phone
                     </label>
@@ -170,10 +170,10 @@ export default function Signup() {
                         type="tel"
                         id="phone"
                         name="phone"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-dark-input-bg dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     />
                     {registerForm.touched.phone && registerForm.errors.phone ? (
-                        <p className="text-red-800">{registerForm.errors.phone}</p>
+                        <p className="text-red-800 dark:text-red-400">{registerForm.errors.phone}</p>
                     ) : (
                         ""
                     )}

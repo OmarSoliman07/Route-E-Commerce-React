@@ -59,13 +59,13 @@ export default function ForgotPassword() {
 
   return (
     <>
-      {errorMessage && <div className="text-red-500">{errorMessage}</div>}
+     
       {FrmDisplay ? (
         <div>
           <h2>Forgot Password</h2>
           <form className="w-7/12 mx-auto" onSubmit={ForgotForm.handleSubmit}>
-            <div className="mb-5">
-              <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">
+            <div className="mb-2">
+              <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Your email
               </label>
               <input
@@ -74,9 +74,10 @@ export default function ForgotPassword() {
                 value={ForgotForm.values.email}
                 onChange={ForgotForm.handleChange}
                 onBlur={ForgotForm.handleBlur}
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-dark-input-bg"
               />
             </div>
+           
             <button type="submit" className="text-white bg-main hover:bg-green-600 font-medium rounded-lg text-sm w-full px-5 py-2.5">
               Send
             </button>
@@ -84,10 +85,10 @@ export default function ForgotPassword() {
         </div>
       ) : (
         <div>
-          <h2>Reset Code</h2>
+          <h2 className="dark:text-white">Reset Code</h2>
           <form className="w-7/12 mx-auto" onSubmit={VerifyResetCodeForm.handleSubmit}>
             <div className="mb-5">
-              <label htmlFor="resetCode" className="block mb-2 text-sm font-medium text-gray-900">
+              <label htmlFor="resetCode" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Reset Code
               </label>
               <input
@@ -95,9 +96,10 @@ export default function ForgotPassword() {
                 id="resetCode"
                 value={VerifyResetCodeForm.values.resetCode}
                 onChange={VerifyResetCodeForm.handleChange}
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-dark-input-bg"
               />
             </div>
+              {errorMessage && <div className="text-red-500 mb-5" >{errorMessage}</div>}
             <button type="submit" className="text-white bg-main hover:bg-green-600 font-medium rounded-lg text-sm w-full px-5 py-2.5">
               Verify
             </button>

@@ -166,6 +166,7 @@ export default function Navbar() {
               Cart
             </NavLink>
           </li>
+          <hr className="w-80 m-auto" />
           <span className="block text-green-500 font-bold text-center mt-3">Hello, {userData?.name || "User"}</span>
           <span className=" decoration-transparent block text-center mt-2 cursor-pointer text-red-500" onClick={logout}>Log Out</span>
         </>

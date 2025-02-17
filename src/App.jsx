@@ -16,6 +16,7 @@ import AuthContextProvider from './Context/AuthContextProvider'
 import ProductDetails from './Compontents/ProductDetails/ProductDetails'
 import ProtectedRouting from './Context/ProtectedRouting'
 import CategoryProducts from './Compontents/CategoryProducts/CategoryProducts'
+import CategorySliderDetails from './Compontents/CategorySliderDetails/CategorySliderDetails'
 
 function App() {
   const [] = useState(0)
@@ -27,9 +28,9 @@ function App() {
         { index: true, element:<ProtectedRouting>  <Home />  </ProtectedRouting>   },
         { path: "product", element: <ProtectedRouting> <Product /> </ProtectedRouting> },
         { path: "ProductDetails/:x/:y", element: <ProtectedRouting> <ProductDetails /> </ProtectedRouting> },
-        // { path: "category/:id", element: <ProtectedRouting> <CategoryProducts /> </ProtectedRouting> },
+        { path: "category/:id", element: <ProtectedRouting> <CategoryProducts /> </ProtectedRouting> },
         { path: "cart", element: <ProtectedRouting> <Cart /> </ProtectedRouting> },
-        // { path: "category", element: <ProtectedRouting> <Category /> </ProtectedRouting> },
+       { path: "CategorySliderDetails/:id", element: <ProtectedRouting> <CategorySliderDetails /> </ProtectedRouting> },
         // { path: "brands", element: <ProtectedRouting> <Brands /> </ProtectedRouting> },
         { path: "login", element: <Login />},
         { path: "forgotPassword", element: <ForgotPassword />},

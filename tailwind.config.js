@@ -10,7 +10,9 @@ export default {
       colors:{
         active:"#0aad0a",
         main:"#1bc61f",
+        "unhover-button": "#49d14c",
         "dark-bg": "#1a202c",
+        "dark-input-bg":"#e8f0fe",
       }
     },
   },
