@@ -195,9 +195,9 @@ export default function Navbar() {
                       }`
                     }
                   >
-                    <i className="mt-5 hover:text-main transition-all duration-100 fa-solid fa-cart-shopping"></i>
+                    <i className="mt-5 ms-3 hover:text-main transition-all duration-100 fa-solid fa-cart-shopping"></i>
                     {numsCartItems > 0 && (
-                      <span className="absolute start-3 bg-red-500 text-white text-xs px-2 py-1 rounded-full">
+                      <span className="absolute start-6 bg-red-500 text-white text-xs px-2 py-1 rounded-full">
                         {numsCartItems}
                       </span>
                     )}
