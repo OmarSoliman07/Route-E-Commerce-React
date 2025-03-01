@@ -11,7 +11,7 @@ export default function Footer() {
   return (
     <footer className="bg-gray-100 text-gray-700 text-sm py-8 px-6 md:px-20">
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-        {/* Categories */}
+  
         <div className="cursor-default">
           <h3 className="font-bold mb-3">Categories</h3>
           <ul className="space-y-2">
@@ -24,7 +24,6 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* Get to know us */}
         <div className="cursor-default">
           <h3 className="font-bold mb-3">Get to know us</h3>
           <ul className="space-y-2">
@@ -36,7 +35,6 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* For Consumers */}
         <div className="cursor-default">
           <h3 className="font-bold mb-3">For Consumers</h3>
           <ul className="space-y-2">
@@ -48,7 +46,7 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* Become a Shopper */}
+ 
         <div className="cursor-default">
           <h3 className="font-bold mb-3">Become a Shopper</h3>
           <ul className="space-y-2">
@@ -63,9 +61,9 @@ export default function Footer() {
 
       <hr className="mt-8 bg-[#dfe2e1]" />
 
-      {/* Payment Partners & App Downloads */}
+ 
       <div className="flex flex-wrap justify-between items-center mt-4 gap-7 md:flex-nowrap md:gap-7">
-        {/* Payment Partners */}
+
         <div className="flex flex-wrap justify-center items-center gap-4 md:gap-7">
           <p className="font-semibold text-center w-full md:w-auto">Payment Partners</p>
           <img className="h-6 md:h-8" src={amazonpay} alt="Amazon Pay" />
@@ -77,7 +75,9 @@ export default function Footer() {
 
         {/* Get deliveries */}
         <div className="flex flex-wrap justify-center items-center gap-4 md:gap-7">
-          <p className="font-semibold text-center w-full md:w-auto">Get deliveries with FreshCart</p>
+          <p className="font-semibold text-center w-full md:w-auto">
+            Get deliveries with FreshCart
+          </p>
           <img className="w-28 md:w-36" src={googleplay} alt="Google Play" />
           <img className="w-28 md:w-36" src={appstore} alt="App Store" />
         </div>
@@ -86,25 +86,25 @@ export default function Footer() {
       <hr className="mt-8 bg-[#dfe2e1]" />
 
       <div className="flex justify-between items-center mt-4 font-semibold">
-        <p className="text-center mt-4">
+        <p className="text-center ">
           © 2025 FreshCart. by <span className="text-main">Omar Soliman</span>
         </p>
 
         <div className="flex items-center gap-3">
           <p>Follow us on:</p>
-          <a className=""
+          <a
             href="https://www.linkedin.com/in/omar-soliman-profile"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <i className="fa-brands fa-linkedin"></i>
+            <i className="fa-brands fa-linkedin text-3xl"></i>
           </a>
           <a
             href="https://github.com/OmarSoliman07"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <i className="fa-brands fa-github"></i>
+            <i className="fa-brands fa-github text-3xl"></i>
           </a>
         </div>
       </div>

@@ -37,7 +37,7 @@ export default function AllOrders() {
     <>
       <Toaster />
    
-      <Link to="/cart" className="block mb-4 text-blue-500 underline">
+      <Link to="/cart" className="block mb-4 text-unhover-button hover:text-main underline">
         Go to Cart
       </Link>
       {orders && orders.length > 0 ? (

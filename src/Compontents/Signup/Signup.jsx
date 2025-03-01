@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 
-// regex مشترك لكلمة المرور
+
 const passwordRegex = /^(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,16}$/;
 
 export default function Signup() {

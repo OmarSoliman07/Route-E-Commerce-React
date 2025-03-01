@@ -5,6 +5,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Cartcontext } from "../../Context/CartContextProveder";
+import { MyWishlistContext } from "../../Context/MywishListContextProveder";
 import toast, { Toaster } from "react-hot-toast";
 
 export default function ProductDetails() {
@@ -14,6 +15,8 @@ export default function ProductDetails() {
   const [loading, setLoading] = useState(true);
   const sliderRef = useRef(null);
   const { addUserCart, setnumsCartItems } = useContext(Cartcontext);
+  const { postUrll, deleteUrl, getUrl } = useContext(MyWishlistContext);
+  const [wishlistIds, setWishlistIds] = useState([]);
 
   useEffect(() => {
     setLoading(true);
@@ -41,14 +44,51 @@ export default function ProductDetails() {
       });
   }, [x]);
 
+  
+  useEffect(() => {
+    getUrl()
+      .then((res) => {
+        const wishlistItems = res.data.data;
+        setWishlistIds(wishlistItems.map(item => item._id));
+      })
+      .catch((err) => {
+        console.error("Error fetching wishlist:", err);
+      });
+  }, [getUrl]);
+
   function addCart(id) {
     addUserCart(id)
       .then((res) => {
-        // تحديث العداد باستخدام القيمة الراجعة من الـ API
         setnumsCartItems(res.data.numOfCartItems);
         toast.success("Added to cart successfully");
       })
       .catch((err) => console.error("Error adding to cart:", err));
+  }
+
+
+  function toggleWishlist(productId, e) {
+    e.preventDefault();
+    if (!wishlistIds.includes(productId)) {
+      postUrll(productId)
+        .then(() => {
+          setWishlistIds(prev => [...prev, productId]);
+          toast.success("Added to wishlist");
+        })
+        .catch((err) => {
+          console.error("Error adding to wishlist:", err);
+          toast.error("Failed to add to wishlist");
+        });
+    } else {
+      deleteUrl(productId)
+        .then(() => {
+          setWishlistIds(prev => prev.filter(id => id !== productId));
+          toast.success("Removed from wishlist");
+        })
+        .catch((err) => {
+          console.error("Error removing from wishlist:", err);
+          toast.error("Failed to remove from wishlist");
+        });
+    }
   }
 
   if (loading) {
@@ -99,15 +139,23 @@ export default function ProductDetails() {
       <Toaster />
       <div className="w-11/12 mx-auto my-5">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center relative">
             <img
               src={product?.imageCover}
               className="w-full max-w-md object-cover rounded-lg shadow-lg"
               alt={product?.title}
             />
+       
+           
           </div>
           <div className="flex flex-col justify-center">
-            <h1 className="text-2xl font-semibold">{product.title}</h1>
+            <div className="flex items-center justify-between">
+              <h1 className="text-2xl font-semibold">{product.title}</h1>
+           
+              <button onClick={(e) => toggleWishlist(product._id, e)} className="ml-2">
+                <i className={`fa-solid fa-heart text-2xl ${wishlistIds.includes(product._id) ? "text-red-500" : "text-gray-400"}`}></i>
+              </button>
+            </div>
             <p className="text-gray-600 dark:text-gray-400 mt-2">{product.description}</p>
             <div className="flex justify-between items-center my-5">
               <h2 className="text-xl font-bold">{product?.price} EGP</h2>
@@ -125,7 +173,7 @@ export default function ProductDetails() {
         </div>
 
         <div className="my-5 mt-10 relative">
-          {/* زر السهم الأيسر */}
+     
           <button
             className="hidden sm:block absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-gray-800 p-2 rounded-full text-white hover:bg-gray-600 dark:bg-gray-300 dark:text-black dark:hover:bg-gray-500"
             onClick={() => sliderRef.current.slickPrev()}
@@ -135,14 +183,20 @@ export default function ProductDetails() {
 
           <h2 className="text-xl font-bold mb-4">Related Products</h2>
 
-          {/* السلايدر مع تمرير الإعدادات الصحيحة */}
           <Slider ref={sliderRef} {...sliderSettings}>
             {relatedProducts.map((item) => (
               <div key={item._id} className="p-2 cursor-pointer">
                 <Link to={`/ProductDetails/${item._id}/${encodeURIComponent(item.title)}`}>
-                  <div className="border rounded-lg p-3 shadow-lg text-center group overflow-hidden">
+                  <div className="border rounded-lg p-3 shadow-lg text-center group overflow-hidden relative">
                     <img src={item.imageCover} className="w-full object-cover h-48 rounded-lg" alt={item.title} />
-                    <h2 className="text-lg font-bold">{item.title.split(" ").slice(0, 2).join(" ")}</h2>
+                    <div className="flex justify-between">
+                      <h2 className="text-lg font-bold">{item.title.split(" ").slice(0, 2).join(" ")}</h2>
+                      
+                      <button onClick={(e) => toggleWishlist(item._id, e)} className="ml-2">
+                        <i className={`fa-solid fa-heart text-2xl ${wishlistIds.includes(item._id) ? "text-red-500" : "text-gray-400"}`}></i>
+                      </button>
+                    </div>
+                    
                     <div className="flex justify-between items-center">
                       <p className="text-gray-700 font-medium dark:text-gray-400">{item.price} EGP</p>
                       <span className="text-yellow-500 font-semibold flex items-center">
@@ -164,7 +218,7 @@ export default function ProductDetails() {
             ))}
           </Slider>
 
-          {/* زر السهم الأيمن */}
+      
           <button
             className="hidden sm:block absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-gray-800 p-2 rounded-full text-white hover:bg-gray-600 dark:bg-gray-300 dark:text-black dark:hover:bg-gray-500"
             onClick={() => sliderRef.current.slickNext()}

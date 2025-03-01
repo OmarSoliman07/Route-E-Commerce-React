@@ -7,7 +7,6 @@ import "./Navbar.css";
 
 export default function Navbar() {
   const { token, setToken, userData } = useContext(AuthContext);
-  // استخدم القيمة من الـ Context مع تهيئة افتراضية 0
   const { numsCartItems = 0 } = useContext(Cartcontext);
   const nav = useNavigate();
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");

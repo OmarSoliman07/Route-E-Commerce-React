@@ -21,6 +21,7 @@ import Wishlist from './Compontents/Wishlist/Wishlist'
 import CartContextProveder from './Context/CartContextProveder'
 import Shipping_Details from './Compontents/Shipping_Details/Shipping_Details'
 import allorders from './Compontents/allorders/allorders'
+import MyWishlistContextProvider from './Context/MywishListContextProveder'
 
 function App() {
   const [] = useState(0)
@@ -39,6 +40,7 @@ function App() {
        { path: "CategorySliderDetails/:id", element: <ProtectedRouting> <CategorySliderDetails /> </ProtectedRouting> },
         { path: "Brands", element: <ProtectedRouting> <Brands /> </ProtectedRouting> },
         { path: "Wishlist", element: <ProtectedRouting> <Wishlist /> </ProtectedRouting> },
+       
       
         { path: "login", element: <Login />},
         { path: "forgotPassword", element: <ForgotPassword />},
@@ -50,7 +52,9 @@ function App() {
     ]);
     return (
       <AuthContextProvider>
+        <MyWishlistContextProvider>
        <CartContextProveder> <RouterProvider router={router} /></CartContextProveder>
+       </MyWishlistContextProvider>
       </AuthContextProvider>
   );
 }

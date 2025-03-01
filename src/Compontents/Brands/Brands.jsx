@@ -31,7 +31,7 @@ export default function Brands() {
             
            
 
-            {/* ✅ قائمة العلامات التجارية */}
+   
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {brands.map((brand) => (
                     <div 

@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 export default function CategorySlider() {
   let [categories, setCategories] = useState([]);
   let navigate = useNavigate();
-  let sliderRef = useRef(null); // 🔹 استخدام ref للتحكم في السلايدر
+  let sliderRef = useRef(null);
 
   function GetAllProducts() {
     axios
@@ -35,7 +35,7 @@ export default function CategorySlider() {
     autoplay: true,
     speed: 500,
     slidesToScroll: 1,
-    arrows: false, // ❌ تعطيل الأسهم الافتراضية
+    arrows: false,
     responsive: [
       {
         breakpoint: 1024,
@@ -62,7 +62,7 @@ export default function CategorySlider() {
 
   return (
     <div className="my-5 mt-10 relative">
-      {/* 🔹 زر السهم الأيسر - مخفي في الموبايل */}
+   
       <button
         className="hidden sm:block absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-gray-800 p-2 rounded-full text-white hover:bg-gray-600 dark:bg-gray-300 dark:text-black dark:hover:bg-gray-500"
         onClick={() => sliderRef.current.slickPrev()} // 🔹 التحكم في السلايدر
@@ -70,15 +70,15 @@ export default function CategorySlider() {
         <i className="fas fa-chevron-left"></i>
       </button>
 
-      {/* 🔹 زر السهم الأيمن - مخفي في الموبايل */}
+  
       <button
         className="hidden sm:block absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-gray-800 p-2 rounded-full text-white hover:bg-gray-600 dark:bg-gray-300 dark:text-black dark:hover:bg-gray-500"
-        onClick={() => sliderRef.current.slickNext()} // 🔹 التحكم في السلايدر
+        onClick={() => sliderRef.current.slickNext()}
       >
         <i className="fas fa-chevron-right"></i>
       </button>
 
-      {/* 🔹 السلايدر */}
+    
       <Slider ref={sliderRef} {...sliderSettings}>
         {categories.map((category) => (
           <div

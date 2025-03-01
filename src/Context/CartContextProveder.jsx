@@ -4,7 +4,7 @@ import React, { createContext, useEffect, useState } from "react";
 export let Cartcontext = createContext();
 
 export default function CartContextProveder({ children }) {
-  // تأكد من تهيئة العداد برقم ابتدائي (مثلاً 0)
+
   const [numsCartItems, setnumsCartItems] = useState(0);
   const baseUrl = "https://ecommerce.routemisr.com/api/v1/cart";
 

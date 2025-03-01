@@ -1,29 +1,45 @@
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import MainSlider from "../MainSlider/MainSlider";
 import CategorySlider from "../CategorySlider/CategorySlider";
 import { Link } from "react-router-dom";
 import { Cartcontext } from "../../Context/CartContextProveder";
+import { MyWishlistContext } from "../../Context/MywishListContextProveder";
 import toast, { Toaster } from "react-hot-toast";
 
-// إنشاء instance من QueryClient
+
 const queryClient = new QueryClient();
 
 function HomeComponent() {
   const [currentPage, setCurrentPage] = useState(1);
   const limit = 24;
   const { addUserCart, setnumsCartItems } = useContext(Cartcontext);
+  const { postUrll, deleteUrl, getUrl } = useContext(MyWishlistContext);
+
+  const [wishlistIds, setWishlistIds] = useState([]);
+
+ 
+  useEffect(() => {
+    getUrl()
+      .then((res) => {
+        const wishlistItems = res.data.data;
+        setWishlistIds(wishlistItems.map((item) => item._id));
+      })
+      .catch((err) => console.error("Error fetching wishlist:", err));
+  }, [getUrl]);
 
   const { data, error, isLoading, isError } = useQuery(
     ["products", currentPage],
     () =>
       axios
-        .get(`https://ecommerce.routemisr.com/api/v1/products?limit=${limit}&page=${currentPage}`)
+        .get(
+          `https://ecommerce.routemisr.com/api/v1/products?limit=${limit}&page=${currentPage}`
+        )
         .then((res) => res.data),
     {
       keepPreviousData: true,
-      staleTime: 5 * 60 * 1000, // 5 دقائق
+      staleTime: 5 * 60 * 1000,
     }
   );
 
@@ -38,6 +54,33 @@ function HomeComponent() {
         toast.success("Added to cart successfully");
       })
       .catch((err) => console.error("Error adding to cart:", err));
+  }
+
+
+  function toggleWishlist(productId, e) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!wishlistIds.includes(productId)) {
+      postUrll(productId)
+        .then(() => {
+          setWishlistIds((prev) => [...prev, productId]);
+          toast.success("Added to wishlist");
+        })
+        .catch((err) => {
+          console.error("Error adding to wishlist:", err);
+          toast.error("Failed to add to wishlist");
+        });
+    } else {
+      deleteUrl(productId)
+        .then(() => {
+          setWishlistIds((prev) => prev.filter((id) => id !== productId));
+          toast.success("Removed from wishlist");
+        })
+        .catch((err) => {
+          console.error("Error removing from wishlist:", err);
+          toast.error("Failed to remove from wishlist");
+        });
+    }
   }
 
   if (isLoading) {
@@ -61,23 +104,43 @@ function HomeComponent() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
           {data.data.map((product) => {
-            const { _id, title, imageCover, price, ratingAverage, category } = product;
+            const { _id, title, imageCover, price, ratingAverage, category } =
+              product;
             const { name } = category;
 
             return (
               <div
                 key={_id}
-                className="p-4 mt-14 shadow-md dark:shadow-[0_4px_6px_rgba(255,255,255,0.1)] hover:border border-main duration-500 group overflow-hidden space-y-3"
+                className="p-4 mt-14 shadow-md dark:shadow-[0_4px_6px_rgba(255,255,255,0.1)] hover:border border-main duration-500 group overflow-hidden space-y-3 relative"
               >
                 <Link to={`/ProductDetails/${_id}/${title}`}>
                   <img src={imageCover} className="w-full" alt={title} />
                   <h5 className="text-main font-semibold">{name}</h5>
-                  <h2 className="text-lg font-bold">{title.split(" ").slice(0, 2).join(" ")}</h2>
+                  <div className="flex justify-between">
+                  <h2 className="text-lg font-bold">
+                    {title.split(" ").slice(0, 2).join(" ")}
+                  </h2>
+                   <button
+                  onClick={(e) => toggleWishlist(_id, e)}
+                  className=""
+                >
+                  <i
+                    className={`fa-solid fa-heart text-2xl ${
+                      wishlistIds.includes(_id)
+                        ? "text-red-500"
+                        : "text-gray-400"
+                    }`}
+                  ></i>
+                </button>
+
+                  </div>
                   <div className="flex justify-between items-center">
-                    <p className="text-gray-700 font-medium dark:text-gray-400">{price} EGP</p>
+                    <p className="text-gray-700 font-medium dark:text-gray-400">
+                      {price} EGP
+                    </p>
                     <span className="text-yellow-500 font-semibold flex items-center">
                       <i className="fa-solid fa-star mr-1"></i>
-                      {ratingAverage}
+                      {product?.ratingsAverage}
                     </span>
                   </div>
                   <button
@@ -91,12 +154,14 @@ function HomeComponent() {
                     Add To Cart
                   </button>
                 </Link>
+         
+               
               </div>
             );
           })}
         </div>
 
-        {/* Pagination */}
+ 
         <nav className="flex justify-center mt-7" aria-label="Page navigation example">
           <ul className="inline-flex -space-x-px text-base h-10">
             <li>
@@ -127,7 +192,9 @@ function HomeComponent() {
 
             <li>
               <button
-                onClick={() => setCurrentPage((prev) => Math.min(prev + 1, numsPages.length))}
+                onClick={() =>
+                  setCurrentPage((prev) => Math.min(prev + 1, numsPages.length))
+                }
                 className="dark:bg-gray-900 dark:text-white dark:hover:bg-slate-700 flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700"
                 disabled={currentPage === numsPages.length}
               >

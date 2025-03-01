@@ -5,7 +5,7 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthContextProvider";
 
-// regex موحد لكلمة المرور: 6-16 حرفًا، يجب أن يحتوي على رقم وحرف خاص
+
 const passwordRegex = /^(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,16}$/;
 
 export default function Login() {
