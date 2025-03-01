@@ -5,25 +5,25 @@ import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 
 export default function ForgotPassword() {
-  let [errorMessage, setError] = useState(null);
-  let [FrmDisplay, setFrmDisplay] = useState(true);
-  let navigate = useNavigate();
+  const [errorMessage, setError] = useState(null);
+  const [FrmDisplay, setFrmDisplay] = useState(true);
+  const navigate = useNavigate();
 
-  let validationSchemaForgot = Yup.object({
+  const validationSchemaForgot = Yup.object({
     email: Yup.string().required("Email is required").email("Enter a valid email"),
   });
 
-  let validationSchemaResetCode = Yup.object({
+  const validationSchemaResetCode = Yup.object({
     resetCode: Yup.string().required("Reset code is required"),
   });
 
-  let ForgotForm = useFormik({
+  const ForgotForm = useFormik({
     initialValues: { email: "" },
     onSubmit: ForgotApi,
     validationSchema: validationSchemaForgot,
   });
 
-  let VerifyResetCodeForm = useFormik({
+  const VerifyResetCodeForm = useFormik({
     initialValues: { resetCode: "" },
     onSubmit: VerifyResetCodeApi,
     validationSchema: validationSchemaResetCode,
@@ -33,7 +33,6 @@ export default function ForgotPassword() {
     try {
       let response = await axios.post("https://ecommerce.routemisr.com/api/v1/auth/forgotPasswords", data);
       console.log("Forgot Password Response:", response.data);
-
       if (response.data.statusMsg === "success") {
         setFrmDisplay(false);
       }
@@ -47,7 +46,6 @@ export default function ForgotPassword() {
     try {
       let response = await axios.post("https://ecommerce.routemisr.com/api/v1/auth/verifyResetCode", data);
       console.log("Verify Reset Code Response:", response.data);
-
       if (response.data.status === "Success") {
         navigate("/updatePassword");
       }
@@ -58,54 +56,100 @@ export default function ForgotPassword() {
   }
 
   return (
-    <>
-     
-      {FrmDisplay ? (
-        <div>
-          <h2>Forgot Password</h2>
-          <form className="w-7/12 mx-auto" onSubmit={ForgotForm.handleSubmit}>
-            <div className="mb-2">
-              <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Your email
-              </label>
-              <input
-                type="email"
-                id="email"
-                value={ForgotForm.values.email}
-                onChange={ForgotForm.handleChange}
-                onBlur={ForgotForm.handleBlur}
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-dark-input-bg"
-              />
-            </div>
-           
-            <button type="submit" className="text-white bg-main hover:bg-green-600 font-medium rounded-lg text-sm w-full px-5 py-2.5">
-              Send
-            </button>
-          </form>
-        </div>
-      ) : (
-        <div>
-          <h2 className="dark:text-white">Reset Code</h2>
-          <form className="w-7/12 mx-auto" onSubmit={VerifyResetCodeForm.handleSubmit}>
-            <div className="mb-5">
-              <label htmlFor="resetCode" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Reset Code
-              </label>
-              <input
-                type="text"
-                id="resetCode"
-                value={VerifyResetCodeForm.values.resetCode}
-                onChange={VerifyResetCodeForm.handleChange}
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-dark-input-bg"
-              />
-            </div>
-              {errorMessage && <div className="text-red-500 mb-5" >{errorMessage}</div>}
-            <button type="submit" className="text-white bg-main hover:bg-green-600 font-medium rounded-lg text-sm w-full px-5 py-2.5">
-              Verify
-            </button>
-          </form>
-        </div>
-      )}
-    </>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 p-4">
+      <div className="w-full max-w-lg bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8">
+        {FrmDisplay ? (
+          <>
+            <h2 className="text-3xl font-bold text-center mb-6 text-gray-900 dark:text-white">
+              Forgot Password
+            </h2>
+            {errorMessage && (
+              <div
+                className="p-4 mb-4 w-full text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-700 dark:text-red-400"
+                role="alert"
+              >
+                {errorMessage}
+              </div>
+            )}
+            <form onSubmit={ForgotForm.handleSubmit} className="space-y-6">
+              <div className="mb-4">
+                <label
+                  htmlFor="email"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Your Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={ForgotForm.values.email}
+                  onChange={ForgotForm.handleChange}
+                  onBlur={ForgotForm.handleBlur}
+                  placeholder="Enter your email"
+                  className="bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg block w-full p-2.5"
+                />
+                {ForgotForm.touched.email && ForgotForm.errors.email && (
+                  <p className="text-red-600 dark:text-red-400 text-sm mt-1">
+                    {ForgotForm.errors.email}
+                  </p>
+                )}
+              </div>
+              <button
+                type="submit"
+                className="w-full bg-unhover-button hover:bg-main text-white font-medium rounded-lg text-sm px-5 py-2.5 transition"
+              >
+                Send
+              </button>
+            </form>
+          </>
+        ) : (
+          <>
+            <h2 className="text-3xl font-bold text-center mb-6 text-gray-900 dark:text-white">
+              Reset Code
+            </h2>
+            {errorMessage && (
+              <div
+                className="p-4 mb-4 w-full text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-700 dark:text-red-400"
+                role="alert"
+              >
+                {errorMessage}
+              </div>
+            )}
+            <form onSubmit={VerifyResetCodeForm.handleSubmit} className="space-y-6">
+              <div className="mb-4">
+                <label
+                  htmlFor="resetCode"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Reset Code
+                </label>
+                <input
+                  type="text"
+                  id="resetCode"
+                  name="resetCode"
+                  value={VerifyResetCodeForm.values.resetCode}
+                  onChange={VerifyResetCodeForm.handleChange}
+                  onBlur={VerifyResetCodeForm.handleBlur}
+                  placeholder="Enter your reset code"
+                  className="bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg block w-full p-2.5"
+                />
+                {VerifyResetCodeForm.touched.resetCode && VerifyResetCodeForm.errors.resetCode && (
+                  <p className="text-red-600 dark:text-red-400 text-sm mt-1">
+                    {VerifyResetCodeForm.errors.resetCode}
+                  </p>
+                )}
+              </div>
+              <button
+                type="submit"
+                className="w-full bg-unhover-button hover:bg-main text-white font-medium rounded-lg text-sm px-5 py-2.5 transition"
+              >
+                Verify
+              </button>
+            </form>
+          </>
+        )}
+      </div>
+    </div>
   );
 }

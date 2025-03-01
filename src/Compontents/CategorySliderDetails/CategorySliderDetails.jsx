@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
+import { Cartcontext } from "../../Context/CartContextProveder";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function CategorySliderDetails() {
   const { id } = useParams();
   const [products, setProducts] = useState([]);
   const [categoryName, setCategoryName] = useState("");
   const [loading, setLoading] = useState(true);
+  
+  let { addUserCart, setnumsCartItems } = useContext(Cartcontext);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -31,8 +35,19 @@ export default function CategorySliderDetails() {
     fetchProducts();
   }, [id]);
 
+  function addCart(productId) {
+    addUserCart(productId)
+      .then((res) => {
+        // تحديث العداد باستخدام القيمة الراجعة من الـ API
+        setnumsCartItems(res.data.numOfCartItems);
+        toast.success("Added to cart successfully");
+      })
+      .catch((err) => console.error("Error adding to cart:", err));
+  }
+
   return (
     <>
+      <Toaster />
       {loading ? (
         <div className="flex justify-center items-center h-screen">
           <span className="loader"></span>
@@ -51,7 +66,7 @@ export default function CategorySliderDetails() {
                 >
                   <Link to={`/ProductDetails/${product._id}/${product.title}`}>
                     <img src={product.imageCover} className="w-full" alt={product.title} />
-                    <h5 className="text-main font-semibold">{product.name}</h5>
+                    <h5 className="text-main font-semibold">{product.category?.name}</h5>
                     <h2 className="text-lg font-bold">
                       {product.title.split(" ").slice(0, 2).join(" ")}
                     </h2>
@@ -64,7 +79,14 @@ export default function CategorySliderDetails() {
                         {product.ratingAverage}
                       </span>
                     </div>
-                    <button className="bg-unhover-button border border-transparent px-4 py-2 mt-5 text-white translate-y-24 group-hover:translate-y-0 duration-500 rounded-md w-full hover:bg-main">
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        addCart(product._id);
+                      }}
+                      className="bg-unhover-button border border-transparent px-4 py-2 mt-5 text-white translate-y-24 group-hover:translate-y-0 duration-500 rounded-md w-full hover:bg-main"
+                    >
                       Add To Cart
                     </button>
                   </Link>

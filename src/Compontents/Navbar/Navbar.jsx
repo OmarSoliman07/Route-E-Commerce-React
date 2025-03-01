@@ -2,15 +2,16 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import LogoImg from "../../assets/images/freshcart-logo (1).png";
 import { AuthContext } from "../../Context/AuthContextProvider";
+import { Cartcontext } from "../../Context/CartContextProveder";
 import "./Navbar.css";
 
 export default function Navbar() {
   const { token, setToken, userData } = useContext(AuthContext);
+  // استخدم القيمة من الـ Context مع تهيئة افتراضية 0
+  const { numsCartItems = 0 } = useContext(Cartcontext);
   const nav = useNavigate();
-
-  // حالة الثيم (Light / Dark)
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // حالة فتح القائمة في الموبايل
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     if (theme === "dark") {
@@ -32,17 +33,15 @@ export default function Navbar() {
   return (
     <nav className="sticky top-0 z-50 bg-white dark:bg-gray-900 border-b border-gray-300 dark:border-gray-700 shadow-md">
       <div className="max-w-screen-xl flex items-center justify-between mx-auto p-4">
-        
-        {/* 👇 اللوجو */}
-       <div> <Link to="/" className="flex items-center space-x-3">
+        <Link to="/" className="flex items-center ">
           <img src={LogoImg} className="h-8" alt="Logo" />
-          <p className="Logo-Tilte ms-0">FreshCart</p>
-        </Link></div>
+          <p className="Logo-Title font-extrabold">FreshCart</p>
+        </Link>
         
-        {/* 🌟 زر القائمة في الموبايل */}
         <button
-          className="ml-auto md:hidden p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 "
+          className="ml-auto md:hidden p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition duration-200"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label="Toggle menu"
         >
           {isMenuOpen ? (
             <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -55,72 +54,100 @@ export default function Navbar() {
           )}
         </button>
 
-        {/* ✅ القائمة في الديسكتوب */}
-       <ul className="md:ml-auto hidden md:flex items-center space-x-4">
-  {token && (
-    <>
-      <li>
-        <NavLink 
-          to="/" 
-          className={({ isActive }) => 
-            `hover:text-green-500 dark:hover:text-green-300 ${isActive ? "text-green-500 dark:text-green-400 font-semibold" : "text-gray-900 dark:text-gray-100"}`
-          }
-        >
-          Home
-        </NavLink>
-      </li>
-      <li>
-        <NavLink 
-          to="/Product" 
-          className={({ isActive }) => 
-            `hover:text-green-500 dark:hover:text-green-300 ${isActive ? "text-green-500 dark:text-green-400 font-semibold" : "text-gray-900 dark:text-gray-100"}`
-          }
-        >
-          Products
-        </NavLink>
-      </li>
-    </>
-  )}
-  {token && (
-    <li>
-      <NavLink 
-        to="/Cart" 
-        className={({ isActive }) => 
-          `hover:text-green-500 dark:hover:text-green-300 ${isActive ? "text-green-500 dark:text-green-400 font-semibold" : "text-gray-900 dark:text-gray-100"}`
-        }
-      >
-        Cart
-      </NavLink>
-    </li>
-  )}
-</ul>
+        <ul className="md:ml-auto hidden md:flex items-center space-x-4">
+          {token && (
+            <>
+              <li>
+                <NavLink
+                  to="/"
+                  className={({ isActive }) =>
+                    `hover:text-green-500 dark:hover:text-green-300 ${
+                      isActive ? "text-green-500 font-semibold" : "text-gray-900 dark:text-gray-100"
+                    }`
+                  }
+                >
+                  Home
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/Brands"
+                  className={({ isActive }) =>
+                    `hover:text-green-500 dark:hover:text-green-300 ${
+                      isActive ? "text-green-500 font-semibold" : "text-gray-900 dark:text-gray-100"
+                    }`
+                  }
+                >
+                  Brands
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/Wishlist"
+                  className={({ isActive }) =>
+                    `hover:text-green-500 dark:hover:text-green-300 ${
+                      isActive ? "text-green-500 font-semibold" : "text-gray-900 dark:text-gray-100"
+                    }`
+                  }
+                >
+                  Wishlist
+                </NavLink>
+              </li>
+              <li className="relative">
+                <NavLink
+                  to="/Cart"
+                  className={({ isActive }) =>
+                    `hover:text-green-500 ${
+                      isActive ? "text-green-500 font-semibold" : "text-gray-900 dark:text-gray-100"
+                    }`
+                  }
+                >
+                  <i className="hover:text-main transition-all duration-100 fa-solid fa-cart-shopping"></i>
+                  {numsCartItems > 0 && (
+                    <span className="absolute top-0 end-0 -translate-y-4 translate-x-3 bg-red-500 text-white text-xs px-2 py-1 rounded-full">
+                      {numsCartItems}
+                    </span>
+                  )}
+                </NavLink>
+              </li>
+            </>
+          )}
+        </ul>
 
-        {/* 🌙 زر تبديل الثيم */}
-        <button className="md:ml-auto md:me-4 p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all" onClick={toggleTheme}>
+        <button
+          className="md:ml-auto md:me-4 p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition duration-200"
+          onClick={toggleTheme}
+          aria-label="Toggle theme"
+        >
           {theme === "light" ? "🌙" : "☀️"}
         </button>
 
-        {/* 🔴 تسجيل الدخول والخروج */}
         <div className="hidden md:flex items-center space-x-4">
           {token ? (
             <>
               <span className="text-green-500 font-semibold">Hello, {userData?.name || "User"}</span>
-              <button className="text-red-500 hover:underline" onClick={logout}>Log Out</button>
+              <button className="text-red-500 hover:underline" onClick={logout}>
+                Log Out
+              </button>
             </>
           ) : (
             <>
-              <NavLink 
-                to="/login" 
-                className={({ isActive }) => 
-                  `hover:text-green-500 ${isActive ? "text-green-500 dark:text-green-400 font-semibold" : "text-gray-900 dark:text-gray-100"}`
+              <NavLink
+                to="/login"
+                className={({ isActive }) =>
+                  `hover:text-green-500 ${
+                    isActive ? "text-green-500 font-semibold" : "text-gray-900 dark:text-gray-100"
+                  }`
                 }
               >
                 Login
               </NavLink>
-              <NavLink 
-                to="/signup" 
-                className={({ isActive }) => 
-                  `hover:text-green-500 ${isActive ? "text-green-500 dark:text-green-400 font-semibold" : "text-gray-900 dark:text-gray-100"}`
+              <NavLink
+                to="/signup"
+                className={({ isActive }) =>
+                  `hover:text-green-500 ${
+                    isActive ? "text-green-500 font-semibold" : "text-gray-900 dark:text-gray-100"
+                  }`
                 }
               >
                 Register
@@ -130,50 +157,67 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* ✅ القائمة في الموبايل */}
       {isMenuOpen && (
-  <div className="md:hidden border-t border-gray-300 pt-3 mt-3">
-    <ul className="flex flex-col p-4 border border-gray-100 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-      {token && (
-        <>
-          <li>
-            <NavLink 
-              to="/" 
-              className={({ isActive }) => 
-                `block py-2 px-3 hover:text-green-500  dark:hover:text-green-300 ${isActive ? "text-green-500 dark:text-green-400 font-semibold" : "text-gray-900 dark:text-white"}`
-              }
-            >
-              Home
-            </NavLink>
-          </li>
-          <li>
-            <NavLink 
-              to="/Product" 
-              className={({ isActive }) => 
-                `block py-2 px-3 hover:text-green-500 dark:hover:text-green-300 ${isActive ? "text-green-500 dark:text-green-400 font-semibold" : "text-gray-900 dark:text-white"}`
-              }
-            >
-              Products
-            </NavLink>
-          </li>
-          <li>
-            <NavLink 
-              to="/Cart" 
-              className={({ isActive }) => 
-                `block py-2 px-3 hover:text-green-500  dark:hover:text-green-300 ${isActive ? "text-green-500 dark:text-green-400 font-semibold" : "text-gray-900 dark:text-white"}`
-              }
-            >
-              Cart
-            </NavLink>
-          </li>
-          <hr className="w-80 m-auto" />
-          <span className="block text-green-500 font-bold text-center mt-3">Hello, {userData?.name || "User"}</span>
-          <span className=" decoration-transparent block text-center mt-2 cursor-pointer text-red-500" onClick={logout}>Log Out</span>
-        </>
+        <div className="md:hidden border-t border-gray-300 pt-3 mt-3">
+          <ul className="flex flex-col p-4 border border-gray-100 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
+            {token && (
+              <>
+                <li>
+                  <NavLink
+                    to="/"
+                    className="block py-2 px-3 hover:text-green-500 dark:hover:text-green-300"
+                  >
+                    Home
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/Product"
+                    className="block py-2 px-3 hover:text-green-500 dark:hover:text-green-300"
+                  >
+                    Products
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/Wishlist"
+                    className="block py-2 px-3 hover:text-green-500 dark:hover:text-green-300"
+                  >
+                    Wishlist
+                  </NavLink>
+                </li>
+                <li className="relative">
+                  <NavLink
+                    to="/Cart"
+                    className={({ isActive }) =>
+                      `hover:text-green-500 ${
+                        isActive ? "text-green-500 font-semibold" : "text-gray-900 dark:text-gray-100"
+                      }`
+                    }
+                  >
+                    <i className="mt-5 hover:text-main transition-all duration-100 fa-solid fa-cart-shopping"></i>
+                    {numsCartItems > 0 && (
+                      <span className="absolute start-3 bg-red-500 text-white text-xs px-2 py-1 rounded-full">
+                        {numsCartItems}
+                      </span>
+                    )}
+                  </NavLink>
+                </li>
+                <hr className="w-80 m-auto" />
+                <span className="block text-green-500 font-bold text-center mt-3">
+                  Hello, {userData?.name || "User"}
+                </span>
+                <span
+                  className="block text-center mt-2 cursor-pointer text-red-500"
+                  onClick={logout}
+                >
+                  Log Out
+                </span>
+              </>
+            )}
+          </ul>
+        </div>
       )}
-    </ul>
-  </div>
-)}
     </nav>
   );
 }
