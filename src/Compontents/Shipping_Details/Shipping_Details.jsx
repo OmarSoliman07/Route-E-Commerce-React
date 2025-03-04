@@ -38,7 +38,7 @@ export default function Shipping_Details() {
     };
     axios
       .post(
-        `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${id}?url=http://localhost:5173`,
+        `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${id}?url=https://route-e-commerce-react.vercel.app`,
         data,
         hederobshnal
       )
